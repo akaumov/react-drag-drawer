@@ -195,7 +195,11 @@ export default class Drawer extends Component {
       // stop android's pull to refresh behavior
       event.preventDefault();
 
-      this.props.onDrag({ newPosition });
+      const stopDrag = this.props.onDrag({ newPosition, event, movingPosition, delta });
+      if (stopDrag) {
+        return;
+      }
+      
       // we set this, so we can access it in shouldWeCloseDrawer. Since setState is async, we're not guranteed we'll have the
       // value in time
       this.MOVING_POSITION = movingPosition;
